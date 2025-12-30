@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+  frontend:
+    build: ../Fiarahantsika_desktop
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  backend:
+    build: ../Fiarahantsika_backend
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://<cloud-host>:3306/mydb
+      - SPRING_DATASOURCE_USERNAME=<cloud-user>
+      - SPRING_DATASOURCE_PASSWORD=<cloud-password>
+
+  ml:
+    build: ../Fiarahantsika_ML
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=<cloud-host>
+      - DB_USER=<cloud-user>
+      - DB_PASS=<cloud-password>

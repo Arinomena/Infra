@@ -1,26 +1,46 @@
 version: "3.9"
+
 services:
+  # --- FRONTEND (React / Vision UI) ---
   frontend:
-    image: arinomena/fiarahantsika-frontend:latest  
+    build:
+      context: ../Fiarahantsika_desktop
+      dockerfile: Dockerfile
+    image: arinomena/fiarahantsika-frontend:latest
     ports:
       - "3000:80"
     depends_on:
       - backend
+    restart: always
 
+  # --- BACKEND (Spring Boot API) ---
   backend:
+    build:
+      context: ../Fiarahantsika_backend
+      dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://<cloud-host>:3306/mydb
-      - SPRING_DATASOURCE_USERNAME=<cloud-user>
-      - SPRING_DATASOURCE_PASSWORD=<cloud-password>
+      # URL mise à jour avec le Host et le Port 24502 d'Aiven
+      - SPRING_DATASOURCE_URL=jdbc:mysql://fiarahantsikadev-nomena-feed.i.aivencloud.com:24502/defaultdb?useSSL=true
+      - SPRING_DATASOURCE_USERNAME=avnadmin
+      - SPRING_DATASOURCE_PASSWORD=AivenAri11!
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    restart: always
 
+  # --- ML (Python Flask/FastAPI) ---
   ml:
-    image: arinomena/fiarahantsika-ml:latest        
+    build:
+      context: ../Fiarahantsika_ML
+      dockerfile: Dockerfile
+    image: arinomena/fiarahantsika-ml:latest
     ports:
       - "5000:5000"
     environment:
-      - DB_HOST=<cloud-host>
-      - DB_USER=<cloud-user>
-      - DB_PASS=<cloud-password>
+      - DB_HOST=fiarahantsikadev-nomena-feed.i.aivencloud.com
+      - DB_PORT=24502
+      - DB_USER=avnadmin
+      - DB_PASS=AivenAri11!
+      - DB_NAME=defaultdb
+    restart: always

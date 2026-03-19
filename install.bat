@@ -58,7 +58,11 @@ docker-compose up -d --build --remove-orphans
 echo.
 echo ======================================================
 echo    INSTALLATION TERMINEE !
-echo    Dashboard : http://localhost:3000
+echo    Lancement automatique du Dashboard...
 echo ======================================================
 echo.
+
+:: --- COMMANDE AJOUTÉE : Ouvre l'URL directement ---
+start http://localhost:3000
+
 pause

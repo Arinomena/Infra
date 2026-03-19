@@ -25,7 +25,7 @@ services:
       # URL mise à jour avec le Host et le Port 24502 d'Aiven
       - SPRING_DATASOURCE_URL=jdbc:mysql://fiarahantsikadev-nomena-feed.i.aivencloud.com:24502/defaultdb?useSSL=true
       - SPRING_DATASOURCE_USERNAME=avnadmin
-      - SPRING_DATASOURCE_PASSWORD=AivenAri11!
+      - SPRING_DATASOURCE_PASSWORD=AVNS_AiHQ0IOpIdcY-HGGyjZ
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     restart: always
 
@@ -41,6 +41,6 @@ services:
       - DB_HOST=fiarahantsikadev-nomena-feed.i.aivencloud.com
       - DB_PORT=24502
       - DB_USER=avnadmin
-      - DB_PASS=AivenAri11!
+      - DB_PASS=AVNS_AiHQ0IOpIdcY-HGGyjZ
       - DB_NAME=defaultdb
     restart: always

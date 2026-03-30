@@ -1,5 +1,4 @@
 version: "3.9"
-
 services:
   frontend:
     build:
@@ -14,7 +13,8 @@ services:
 
   backend:
     build:
-      context: ../Fiarahantsika_backend/backend
+      # Correction ici : on s'arrête au dossier racine du backend
+      context: ../Fiarahantsika_backend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:

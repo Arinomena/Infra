@@ -3,8 +3,7 @@ version: "3.9"
 services:
   frontend:
     build:
-      # Correction du nom (majuscules/minuscules selon ton dossier reel)
-      context: ../FIARAHANTSIKA_DESKTOP
+      context: ../Fiarahantsika_desktop
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-frontend:latest
     ports:
@@ -15,8 +14,7 @@ services:
 
   backend:
     build:
-      # Correction du nom (FiarahantsikaBackend sans underscore)
-      context: ../FiarahantsikaBackend
+      context: ../Fiarahantsika_backend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:

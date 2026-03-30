@@ -27,42 +27,48 @@ if %errorlevel% neq 0 (
 )
 
 :: --- CONFIGURATION DES DEPOTS ---
-set FRONTEND_REPO=https://github.com/Arinomena/Fiarahantsika_desktop.git
-set BACKEND_REPO=https://github.com/Arinomena/Fiarahantsika_backend.git
-set ML_REPO=https://github.com/Arinomena/Fiarahantsika_ML.git
+set "FRONT_R=https://github.com/Arinomena/Fiarahantsika_desktop.git"
+set "BACK_R=https://github.com/Arinomena/Fiarahantsika_backend.git"
+set "ML_R=https://github.com/Arinomena/Fiarahantsika_ML.git"
 
-set FRONTEND_DIR=..\Fiarahantsika_desktop
-set BACKEND_DIR=..\Fiarahantsika_backend
-set ML_DIR=..\Fiarahantsika_ML
+set "FRONT_D=..\Fiarahantsika_desktop"
+set "BACK_D=..\Fiarahantsika_backend"
+set "ML_D=..\Fiarahantsika_ML"
 
 echo.
 echo === ETAPE 1 : Synchronisation du code source ===
 
-for %%i in ("Frontend!%FRONTEND_REPO%!%FRONTEND_DIR%" "Backend!%BACKEND_REPO%!%BACKEND_DIR%" "ML!%ML_REPO%!%ML_DIR%") do (
-    for /f "tokens=1,2,3 delims=!" %%a in (%%i) do (
+:: Boucle corrigée avec virgules comme délimiteurs
+for %%I in ("Frontend,%FRONT_R%,%FRONT_D%" "Backend,%BACK_R%,%BACK_D%" "ML,%ML_R%,%ML_D%") do (
+    for /f "tokens=1,2,3 delims=," %%a in (%%I) do (
         if not exist "%%c" (
-            echo [CLONE] %%a...
+            echo [CLONE] %%a en cours...
             git clone %%b %%c
         ) else (
-            echo [UPDATE] %%a...
-            cd /d %%c && git pull && cd /d %~dp0
+            echo [UPDATE] %%a en cours...
+            pushd "%%c" && git pull && popd
         )
     )
 )
 
 echo.
 echo === ETAPE 2 : Lancement des services (Patientez...) ===
-docker-compose pull
+:: Nettoyage des anciens conteneurs pour eviter les conflits de ports
+docker-compose down
 docker-compose up -d --build --remove-orphans
 
 echo.
 echo ======================================================
 echo    INSTALLATION TERMINEE !
-echo    Lancement automatique du Dashboard...
+echo    Attente du demarrage des services (20s)...
 echo ======================================================
 echo.
 
-:: --- COMMANDE AJOUTÉE : Ouvre l'URL directement ---
+:: --- PAUSE TECHNIQUE ---
+:: Laisse le temps au serveur React/Vite de demarrer reellement
+timeout /t 20 /nobreak >nul
+
+echo Lancement automatique du Dashboard...
 start http://localhost:3000
 
 pause

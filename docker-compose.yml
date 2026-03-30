@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-  # --- FRONTEND (React / Vision UI) ---
   frontend:
     build:
       context: ../Fiarahantsika_desktop
@@ -13,7 +12,6 @@ services:
       - backend
     restart: always
 
-  # --- BACKEND (Spring Boot API) ---
   backend:
     build:
       context: ../Fiarahantsika_backend
@@ -22,14 +20,12 @@ services:
     ports:
       - "8080:8080"
     environment:
-      # URL mise à jour avec le Host et le Port 24502 d'Aiven
       - SPRING_DATASOURCE_URL=jdbc:mysql://fiarahantsikadev-nomena-feed.i.aivencloud.com:24502/defaultdb?useSSL=true
       - SPRING_DATASOURCE_USERNAME=avnadmin
       - SPRING_DATASOURCE_PASSWORD=AVNS_AiHQ0IOpIdcY-HGGyjZ
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     restart: always
 
-  # --- ML (Python Flask/FastAPI) ---
   ml:
     build:
       context: ../Fiarahantsika_ML

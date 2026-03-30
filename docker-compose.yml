@@ -3,7 +3,7 @@ version: "3.9"
 services:
   frontend:
     build:
-      context: ../Fiarahantsika_desktop
+      context: ../Fiarahantsika_desktop/frontend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-frontend:latest
     ports:

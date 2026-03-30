@@ -14,7 +14,7 @@ services:
 
   backend:
     build:
-      context: ../Fiarahantsika_backend
+      context: ../Fiarahantsika_backend/backend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:

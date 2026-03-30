@@ -14,7 +14,7 @@ services:
   backend:
     build:
       # Correction ici : on s'arrête au dossier racine du backend
-      context: ../Fiarahantsika_backend
+      context: ../Fiarahantsika_backend/FiarahantsikaBackend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:

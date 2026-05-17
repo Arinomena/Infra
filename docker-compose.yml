@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   frontend:
     build:
@@ -13,16 +12,20 @@ services:
 
   backend:
     build:
-      # Correction ici : on s'arrête au dossier racine du backend
       context: ../Fiarahantsika_backend/FiarahantsikaBackend
       dockerfile: Dockerfile
     image: arinomena/fiarahantsika-backend:latest
     ports:
       - "8080:8080"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://fiarahantsikadev-nomena-feed.i.aivencloud.com:24502/defaultdb?useSSL=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://fiarahantsikadev-nomena-feed.i.aivencloud.com:24502/defaultdb?useSSL=true&requireSSL=true&verifyServerCertificate=false
       - SPRING_DATASOURCE_USERNAME=avnadmin
       - SPRING_DATASOURCE_PASSWORD=AVNS_AiHQ0IOpIdcY-HGGyjZ
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+      - SPRING_JPA_DATABASE_PLATFORM=org.hibernate.dialect.MySQLDialect
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     restart: always
 
@@ -33,6 +36,9 @@ services:
     image: arinomena/fiarahantsika-ml:latest
     ports:
       - "5000:5000"
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
     environment:
       - DB_HOST=fiarahantsikadev-nomena-feed.i.aivencloud.com
       - DB_PORT=24502
